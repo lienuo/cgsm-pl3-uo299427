@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import WEBGL from 'three/examples/jsm/capabilities/WebGL.js';
+import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min';
+import Stats from 'three/examples/jsm/libs/stats.module';
 
 if ( WEBGL.isWebGLAvailable() ) {
      //WebGL is available
@@ -30,8 +32,16 @@ scene.add( light );
     box.rotation.set( Math.PI / 5, Math.PI / 5, 0 );
     scene.add( box );
     renderer.render( scene, camera );
-    
-    
+    const controlData = {
+    bumpScale: material.bumpScale
+    }
+    const stats = new Stats( );
+    stats.domElement.style.position = 'absolute';
+    stats.domElement.style.top = '0px';
+    document.body.appendChild( stats.domElement );
+
+    const gui = new GUI( );
+    gui.add( controlData, 'bumpScale', -4, 4 ).step(0.1).name( 'bumpScale' );
     const clock = new THREE.Clock();
 
     animate();
@@ -41,7 +51,8 @@ scene.add( light );
         const rotation = ( delta * Math.PI * 2 ) / 24;
         box.rotation.y += rotation;
         box.rotation.y += rotation * 0.95;
-       
+        material.bumpScale = controlData.bumpScale;//
+        stats.update( );
         // Render the scene
         renderer.render( scene, camera );
     
