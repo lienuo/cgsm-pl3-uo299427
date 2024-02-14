@@ -4,6 +4,7 @@ import WEBGL from 'three/examples/jsm/capabilities/WebGL.js';
 if ( WEBGL.isWebGLAvailable() ) {
     // WebGL is available
     console.log('Soporta WebGL');
+    
     const scene = new THREE.Scene();
     const renderer = new THREE.WebGLRenderer( {antialias: true} );
     renderer.setSize( window.innerWidth, window.innerHeight );
